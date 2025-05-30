@@ -1,0 +1,13 @@
+name: "User Login"
+method: POST
+url: "{{base_url}}/auth/login"
+headers:
+  Content-Type: "application/json"
+body:
+  json:
+    email: "user@example.com"
+    password: "{{user_password}}"
+tests:
+  - status_code: 200
+  - json_path: "$.token"
+    exists: true

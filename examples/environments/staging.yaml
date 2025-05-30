@@ -1,0 +1,6 @@
+name: "Staging"
+variables:
+  base_url: "https://staging-api.example.com"
+  auth_token: "staging-token-456"
+  user_password: "staging-password"
+  timeout: "20"

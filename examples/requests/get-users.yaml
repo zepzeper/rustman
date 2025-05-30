@@ -1,0 +1,14 @@
+name: "Get All Users"
+method: GET
+url: "{{base_url}}/api/users"
+headers:
+  Authorization: "Bearer {{auth_token}}"
+  Accept: "application/json"
+params:
+  limit: 10
+  page: 1
+tests:
+  - status_code: 200
+  - response_time_less_than: 1000
+  - json_path: "$.data[0].id"
+    exists: true
