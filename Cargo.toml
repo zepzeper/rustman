@@ -39,5 +39,8 @@ thiserror = "1.0"
 # Template engine for variables
 handlebars = "4.3"
 
+regex = "1"
+
 [dev-dependencies]
 tempfile = "3.0"
+

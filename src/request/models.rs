@@ -2,6 +2,8 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use std::collections::HashMap;
 
+use crate::environment::EnvironmentResolver;
+
 #[derive(Error, Debug)]
 pub enum ValidationError {
     #[error("File I/O error: {0}")]
@@ -36,7 +38,7 @@ pub struct RequestDefinition {
     pub tests: Option<Vec<TestAssertion>>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub enum HttpMethod {
     GET,
     POST,
@@ -120,5 +122,9 @@ impl RequestDefinition {
     fn is_valid_header_name(&self, name: &str) -> bool {
         // HTTP header names should not be empty and contain valid characters
         !name.trim().is_empty() && name.chars().all(|c| c.is_ascii() && !c.is_control())
+    }
+
+    pub fn resolve_with_env(&self, env_resolver: &EnvironmentResolver) -> Result<RequestDefinition, ValidationError> {
+        Ok(self.clone())
     }
 }
