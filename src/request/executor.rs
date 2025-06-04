@@ -1,7 +1,8 @@
 use anyhow::Result;
 use reqwest::Client;
-use crate::request::RequestDefinition;
+use crate::{environment::EnvironmentResolver, request::RequestDefinition};
 
+#[derive(Default)]
 pub struct RequestExecutor {
     client: Client,
 }
@@ -13,8 +14,7 @@ impl RequestExecutor {
         }
     }
 
-    pub async fn execute(&self, request: &RequestDefinition) -> Result<reqwest::Response> {
-        // TODO: Implement request execution
+    pub async fn execute(&self, request: &RequestDefinition, environment: &EnvironmentResolver) -> Result<reqwest::Response> {
         todo!("Implement request execution")
     }
 }

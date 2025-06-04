@@ -4,6 +4,10 @@ use std::collections::HashMap;
 
 #[derive(Error, Debug)]
 pub enum ValidationError {
+    #[error("File I/O error: {0}")]
+    FileIo(String),
+    #[error("Parsing error: {0}")]
+    Parse(String),
     #[error("Invalid HTTP method: {0}")]
     InvalidMethod(String),
     #[error("Invalid URL: {0}")]

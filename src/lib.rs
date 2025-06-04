@@ -6,14 +6,20 @@ pub mod utils;
 
 use anyhow::Result;
 use cli::{Cli, Commands};
-use request::RequestValidator;
+use environment::EnvironmentResolver;
+use request::{RequestExecutor, RequestParser, RequestValidator};
 
 pub async fn run(cli: Cli) -> Result<()> {
     match cli.command {
         Commands::Run { path, env, output, verbose } => {
             println!("🚀 Running request from: {}", path);
+            let mut env_resolver = EnvironmentResolver::default();
             if let Some(env) = env {
                 println!("🌍 Using environment: {}", env);
+                let results = RequestParser::parse_file(&path).unwrap();
+                env_resolver.load_environment_file(env.as_str()).unwrap();
+                let request_handler = RequestExecutor::new();
+                let _ = request_handler.execute(&results, &env_resolver).await;
             }
             if let Some(output) = output {
                 println!("📄 Output file: {}", output);
